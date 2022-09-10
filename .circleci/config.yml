@@ -17,6 +17,11 @@ jobs:
       - checkout
       - aws-cli/setup
       # Use root level package.json to install dependencies in the frontend app
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
       - run:
           name: Install Front-End Dependencies
           command: |
@@ -25,12 +30,26 @@ jobs:
             echo "NPM --version" 
             echo $(npm --version)
             npm run frontend:install
-      # TODO: Install dependencies in the the backend API          
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+    
+      # TODO: Install dependencies in the the backend API   
+
+      -restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-       
       - run:
           name: Install API Dependencies
           command: |
            echo "TODO: Install dependencies in the the backend API  "
            npm run api:install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
       # TODO: Lint the frontend
       - run:
           name: Front-End Lint
