@@ -37,7 +37,7 @@ jobs:
     
       # TODO: Install dependencies in the the backend API   
 
-      -restore_cache:
+      - restore_cache:
           keys:
             - v2-dependencies-{{ checksum "package.json" }}
             - v2-dependencies-       
