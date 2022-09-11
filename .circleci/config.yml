@@ -87,12 +87,6 @@ jobs:
             echo $(node --version)
             echo "NPM --version" 
             echo $(npm --version)
-            echo $(AWS_ACCESS_KEY_ID)
-            echo $(AWS_SECRET_ACCESS_KEY)
-            echo $(POSTGRES_DB)
-            echo $(POSTGRES_HOST)
-            echo $(POSTGRES_PASSWORD)
-            echo $(POSTGRES_USER)
             npm run api:install
       - save_cache:
           paths:
