@@ -4,9 +4,10 @@ orbs:
   node: circleci/node@5.0.2
   eb: circleci/aws-elastic-beanstalk@2.0.1
   aws-cli: circleci/aws-cli@3.1.1
+  aws-elastic-beanstalk: circleci/aws-elastic-beanstalk@2.0.1
   # different jobs are calles later in the workflows sections
 jobs:
-  build:
+  build_deploy_frontend:
     docker:
       # the base image can run most needed actions with orbs
       - image: "cimg/node:14.15"
@@ -48,7 +49,7 @@ jobs:
            npm run api:install
       - save_cache:
           paths:
-            - node_modules
+            - ./node_modules
           key: v2-dependencies-{{ checksum "package.json" }}
       # TODO: Lint the frontend
       - run:
@@ -62,43 +63,57 @@ jobs:
           command: |
             echo "TODO: Build the frontend app"
             npm run frontend:build
-      # TODO: Build the backend API      
-      - run:
-          name: API Build
+      - run :
+          name: Deploy to S3
           command: |
-            echo "TODO: Build the backend API"
-            npm run api:build
-  # deploy step will run only after manual approval
-  deploy:
+            echo "TODO: Deploy to S3"
+            npm run frontend:deploy     
+  build_deploy_backend:
     docker:
-      - image: "cimg/base:stable"
-      # more setup needed for aws, node, elastic beanstalk
+      - image: "cimg/node:14.15"
     steps:
       - node/install:
-          node-version: '14.15' 
-      - eb/setup
-      - aws-cli/setup
+          node-version: '14.15'         
       - checkout
+      - aws-cli/setup 
+      - restore_cache:
+          keys:
+            - v2-dependencies-{{ checksum "package.json" }}
+            - v2-dependencies-
       - run:
-          name: Deploy App
-          # TODO: Install, build, deploy in both apps
+          name: Install API Dependencies
           command: |
-            echo "# TODO: Install, build, deploy in both apps"
-            npm run deploy
+            echo "NODE --version" 
+            echo $(node --version)
+            echo "NPM --version" 
+            echo $(npm --version)
+            npm run api:install
+      - save_cache:
+          paths:
+            - ./node_modules
+          key: v2-dependencies-{{ checksum "package.json" }}
+      - run:
+          name: API build
+          command: |
+            echo "TODO: Build the backend app"
+            npm run api:build
+      - aws-elastic-beanstalk/setup
+      - run:
+          name: Deploy to Elastic Beanstalk
+          command: |
+            echo "TODO: Deploy to Elastic Beanstalk"
+            npm run api:deploy        
+
 
             
 workflows:
   udagram:
     jobs:
-      - build
-      - hold:
+      - build_deploy_frontend:
           filters:
             branches:
-              only:
-                - master
-          type: approval
-          requires:
-            - build
-      - deploy:
-          requires:
-            - hold
+              only: master
+      - build_deploy_backend:
+          filters:
+            branches:
+              only: master
