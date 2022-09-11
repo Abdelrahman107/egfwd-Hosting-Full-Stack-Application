@@ -87,7 +87,6 @@ jobs:
             echo $(node --version)
             echo "NPM --version" 
             echo $(npm --version)
-           # print env variables
             echo $(AWS_ACCESS_KEY_ID)
             echo $(AWS_SECRET_ACCESS_KEY)
             echo $(POSTGRES_DB)
