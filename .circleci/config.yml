@@ -116,6 +116,6 @@ workflows:
           type: approval
           requires:
             - build_deploy_frontend
-      - build_deploy_frontend:
+      - build_deploy_backend:
           requires:
             - hold
