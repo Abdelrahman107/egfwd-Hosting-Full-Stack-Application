@@ -104,18 +104,16 @@ jobs:
             echo "TODO: Deploy to Elastic Beanstalk"
             npm run api:deploy        
 
+
+            
 workflows:
   udagram:
     jobs:
-      - build_deploy_frontend
-      - hold:
+      - build_deploy_frontend:
           filters:
             branches:
-              only:
-                - master
-          type: approval
-          requires:
-            - build_deploy_frontend
+              only: master
       - build_deploy_backend:
-          requires:
-            - hold
+          filters:
+            branches:
+              only: master
