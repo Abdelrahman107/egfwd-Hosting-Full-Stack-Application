@@ -1,6 +1,18 @@
 # Hosting a Full-Stack Application
 
-### **You can use you own project completed in previous courses or use the provided Udagram app for completing this final project.**
+- Live Frontend version: http://frontendbucket120102.s3-website-us-east-1.amazonaws.com deployed on S3
+- Live Backend version: http://udagram-api-dev2222222.us-east-1.elasticbeanstalk.com deployed on Elastic Beanstalk
+
+
+# Architecture
+![Architectural diagram](./screenshots/Architectural_diagram.jpeg "Architectural diagram")
+
+# CircleCI Pipeline
+<img src="./screenshots/pipeline.jpeg" width="500" height="300">
+
+## Description:
+
+In this project, It's required to host a full stack application using AWS services. The front-end is a React application that is hosted on S3 and the back-end is a Node-Express application that is hosted on Elastic Beanstalk. The server is connected to a PostgreSQL database hosted on RDS. It's required to automate the process of building and deploying the application using a CI/CD pipeline on CircleCI.This project is submitted for Advanced Full-Stack Web Development Nanodegree by udacity.
 
 ---
 
@@ -39,7 +51,8 @@ Provision the necessary AWS services needed for running the application:
 
 1. In AWS, provision a publicly available RDS database running Postgres. <Place holder for link to classroom article>
 1. In AWS, provision a s3 bucket for hosting the uploaded files. <Place holder for tlink to classroom article>
-1. Export the ENV variables needed or use a package like [dotnev](https://www.npmjs.com/package/dotenv)/.
+1. Export the ENV variables needed or use a package like [dotnev](https://www.npmjs.com/package/dotenv)/ 
+
 1. From the root of the repo, navigate udagram-api folder `cd starter/udagram-api` to install the node_modules `npm install`. After installation is done start the api in dev mode with `npm run dev`.
 1. Without closing the terminal in step 1, navigate to the udagram-frontend `cd starter/udagram-frontend` to intall the node_modules `npm install`. After installation is done start the api in dev mode with `npm run start`.
 
@@ -67,6 +80,11 @@ The e2e tests are using Protractor and Jasmine.
 - [Node](https://nodejs.org) - Javascript Runtime
 - [Express](https://expressjs.com/) - Javascript API Framework
 
+##Technologies and Tools Used
+- AWS(S3, RDS, Elastic Beanstalk)
+- CircleCI
+
 ## License
 
 [License](LICENSE.txt)
+
